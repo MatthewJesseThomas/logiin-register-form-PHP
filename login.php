@@ -24,35 +24,60 @@ if (isset($_POST['submit'])) {
 
                 logInEmployee($row['employee_id'], $row['fullname']); // Call the function to log the message
 
-                header("Location: index.php");
+                header("Location: https://dev-clockops.pantheonsite.io/");
                 exit();
             } else {
-                echo "
-                <script> 
-                alert('Incorrect Password');
-                </script>";
+                echo '
+         <script>
+            Swal.fire({
+            title: "Oops",
+            text: "Incorrect Password!",
+            icon: "error",
+            confirmButtonText: "OK"
+    });
+    console.log("Incorrect Password");
+        </script>';
             }
         } else {
-            echo "
-            <script> 
-            alert('User Not Registered');
-            </script>";
+            echo '
+         <script>
+            Swal.fire({
+            title: "Oops",
+            text: "User Not Registered!!!",
+            icon: "error",
+            confirmButtonText: "OK"
+    });
+    console.log("User Not Registered");
+        </script>';
         }
     } else {
-        echo "
-        <script> 
-        alert('Invalid input');
-        </script>";
+        echo '
+         <script>
+            Swal.fire({
+            title: "Oops",
+            text: "Invalid input!",
+            icon: "error",
+            confirmButtonText: "OK"
+    });
+    console.log("Invalid input");
+        </script>';
     }
 }
 
 // Display logged-in successfully message
 if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
-    echo "
-    <script> 
-    alert('Logged in successfully. Welcome, $loggedInUser!');
-    </script>";
+    echo '
+        <script>
+            Swal.fire({
+            title: "Congrats",
+            text: "Logged in successfully. Welcome, ' . $loggedInUser . '!",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+            console.log(\'Log In Successful\');
+        </script>';
+
 }
 ?>
 

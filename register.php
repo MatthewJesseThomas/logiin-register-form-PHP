@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 
                 logInEmployee($employeeId, $fullname); // Call the function to log the message
 
-                header("Location: index.php"); // Redirect to the welcome page after successful registration
+                header("Location: login.php"); // Redirect to the welcome page after successful registration
                 exit();
             } else {
                 echo '
