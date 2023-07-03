@@ -1,0 +1,13 @@
+{
+    "files.autoSave": "afterDelay",
+    "cSpell.words": [
+        "chrono",
+        "confirmpassword",
+        "Fullname",
+        "fullnameemail",
+        "mydatabase",
+        "phpqrcode",
+        "qrcodes",
+        "Swal"
+    ]
+}

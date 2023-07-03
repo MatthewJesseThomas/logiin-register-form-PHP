@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body{
+    background-color: rgb(197, 221, 241);
+}
+.btn-primary{
+    color: rgb(255, 255, 255);
+}
+.btn-primary:hover{
+    background-color: rgb(4, 212, 32);
+}
+.registration-container {
+    border: 4px solid #1976D2;
+    border-radius: 5px;
+    padding: 20px;
+}
+.login-container {
+    border: 4px solid #1976D2;
+    border-radius: 5px;
+    padding: 20px;
+}
