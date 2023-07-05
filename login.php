@@ -30,36 +30,42 @@ if (isset($_POST['submit'])) {
             } else {
                 echo '
                 <script>
+                document.addEventListener("DOMContentLoaded", function() {
                     Swal.fire({
                         title: "Oops",
                         text: "Incorrect Password!",
                         icon: "error",
                         confirmButtonText: "OK"
                     });
+                });
                     console.log("Incorrect Password");
                 </script>';
             }
         } else {
             echo '
                 <script>
+                document.addEventListener("DOMContentLoaded", function() {
                     Swal.fire({
                         title: "Oops",
                         text: "User Not Registered!!!",
                         icon: "error",
                         confirmButtonText: "OK"
                     });
+                });
                     console.log("User Not Registered");
                 </script>';
         }
     } else {
         echo '
             <script>
+            document.addEventListener("DOMContentLoaded", function() {
                 Swal.fire({
                     title: "Oops",
                     text: "Invalid input!",
                     icon: "error",
                     confirmButtonText: "OK"
                 });
+            });
                 console.log("Invalid input");
             </scrip>';
     }
@@ -68,16 +74,34 @@ if (isset($_POST['submit'])) {
 // Display logged-in successfully message
 if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
-    echo '
-        <script>
-            Swal.fire({
-                title: "Congrats",
-                text: "Logged in successfully. Welcome, ' . $loggedInUser . '!",
-                icon: "success",
-                confirmButtonText: "OK"
+    // Clock user's time-in
+    $currentTime = date("Y-m-d H:i:s");
+    $userId = $_SESSION["id"];
+    // Assuming you have an active database connection established
+    // Prepare the SQL statement
+    $sql = "UPDATE attendance SET clock_in = ? WHERE employee_id = ?";
+    // Prepare and bind the parameters
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $currentTime, $userId);
+    // Execute the statement
+    $stmt->execute();
+    // Check if the clock-in was successful
+    if ($stmt->affected_rows > 0) {
+        echo '
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Congrats",
+                    text: "Clocked in successfully. Welcome, ' . $loggedInUser . '!",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
             });
             console.log(\'Log In Successful\');
-        </script>';
+            </script>';
+    }
+    // Close the statement
+    $stmt->close();
 }
 ?>
 
