@@ -29,8 +29,6 @@ if (isset($_POST['submit'])) {
                 exit();
             } else {
                 echo '
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
                 <script>
                     Swal.fire({
                         title: "Oops",
@@ -43,8 +41,6 @@ if (isset($_POST['submit'])) {
             }
         } else {
             echo '
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
                 <script>
                     Swal.fire({
                         title: "Oops",
@@ -57,8 +53,6 @@ if (isset($_POST['submit'])) {
         }
     } else {
         echo '
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
             <script>
                 Swal.fire({
                     title: "Oops",
@@ -67,7 +61,7 @@ if (isset($_POST['submit'])) {
                     confirmButtonText: "OK"
                 });
                 console.log("Invalid input");
-            </script>';
+            </scrip>';
     }
 }
 
