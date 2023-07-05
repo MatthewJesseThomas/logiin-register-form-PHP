@@ -109,6 +109,7 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_assoc($result);
 
         if (mysqli_num_rows($result) > 0) {
+
             // Check if the provided password matches either the hashed password or the plaintext password
             if (password_verify($password, $row['password']) || $password === $row['password']) {
                 // Password is correct, log in the user
@@ -163,6 +164,7 @@ if (isset($_POST['submit'])) {
             </scrip>';
     }
 }
+
 // Display logged-In successfully message
 if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
@@ -198,8 +200,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
             });
             console.log("Log In Successful");
             </script>';
+
+        // Redirect the user to the home page after clocking in
+        header("Location: https://dev-clockops.pantheonsite.io/");
+        exit();
     }
 }
+
 // Display logged-Out successfully message
 if (isset($_POST['logout'])) {
     if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
@@ -216,6 +223,7 @@ if (isset($_POST['logout'])) {
         exit();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
