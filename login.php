@@ -1,7 +1,8 @@
 <?php
 require 'config.php';
 
-function logInEmployee($employeeId, $employeeName) {
+function logInEmployee($employeeId, $employeeName)
+{
     // Store the logged-in employee's information in a log file or database
     // In this example, we will simply log the message to the PHP error log
     error_log("Employee with ID $employeeId and name $employeeName logged in.");
@@ -28,39 +29,45 @@ if (isset($_POST['submit'])) {
                 exit();
             } else {
                 echo '
-         <script>
-            Swal.fire({
-            title: "Oops",
-            text: "Incorrect Password!",
-            icon: "error",
-            confirmButtonText: "OK"
-    });
-    console.log("Incorrect Password");
-        </script>';
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
+                <script>
+                    Swal.fire({
+                        title: "Oops",
+                        text: "Incorrect Password!",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                    console.log("Incorrect Password");
+                </script>';
             }
         } else {
             echo '
-         <script>
-            Swal.fire({
-            title: "Oops",
-            text: "User Not Registered!!!",
-            icon: "error",
-            confirmButtonText: "OK"
-    });
-    console.log("User Not Registered");
-        </script>';
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
+                <script>
+                    Swal.fire({
+                        title: "Oops",
+                        text: "User Not Registered!!!",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                    console.log("User Not Registered");
+                </script>';
         }
     } else {
         echo '
-         <script>
-            Swal.fire({
-            title: "Oops",
-            text: "Invalid input!",
-            icon: "error",
-            confirmButtonText: "OK"
-    });
-    console.log("Invalid input");
-        </script>';
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
+            <script>
+                Swal.fire({
+                    title: "Oops",
+                    text: "Invalid input!",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                console.log("Invalid input");
+            </script>';
     }
 }
 
@@ -70,14 +77,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     echo '
         <script>
             Swal.fire({
-            title: "Congrats",
-            text: "Logged in successfully. Welcome, ' . $loggedInUser . '!",
-            icon: "success",
-            confirmButtonText: "OK"
-        });
+                title: "Congrats",
+                text: "Logged in successfully. Welcome, ' . $loggedInUser . '!",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
             console.log(\'Log In Successful\');
         </script>';
-
 }
 ?>
 
@@ -88,6 +94,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Login</title>
@@ -121,6 +128,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js">
 </script>
 
 </html>
