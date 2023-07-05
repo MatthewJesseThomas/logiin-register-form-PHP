@@ -8,6 +8,33 @@ function logInEmployee($employeeId, $employeeName)
     error_log("Employee with ID $employeeId and name $employeeName logged in.");
 }
 
+function isEmployeeClockedIn($employeeId)
+{
+    global $conn;
+
+    // Prepare the SQL statement to check if the employee is already clocked in
+    $sql = "SELECT clock_in FROM attendance WHERE employee_id = ? AND DATE(clock_in) = CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employeeId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    return $result->num_rows > 0;
+}
+
+function clockInEmployee($employeeId)
+{
+    global $conn;
+
+    // Prepare the SQL statement to insert the employee's clock-in time
+    $sql = "INSERT INTO attendance (employee_id, clock_in) VALUES (?, NOW())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employeeId);
+    $stmt->execute();
+    $stmt->close();
+}
+
 if (isset($_POST['submit'])) {
     if (isset($_POST['fullnameemail']) && isset($_POST['password'])) {
         $fullnameemail = $_POST['fullnameemail'];
@@ -74,19 +101,26 @@ if (isset($_POST['submit'])) {
 // Display logged-in successfully message
 if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
-    // Clock user's time-in
-    $currentTime = date("Y-m-d H:i:s");
     $employeeId = $_SESSION["id"];
-    // Assuming you have an active database connection established
-    // Prepare the SQL statement
-    $sql = "UPDATE attendance SET clock_in = ? WHERE employee_id = ?";
-    // Prepare and bind the parameters
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $currentTime, $employeeId);
-    // Execute the statement
-    $stmt->execute();
-    // Check if the clock-in was successful
-    if ($stmt->affected_rows > 0) {
+
+    // Check if the employee is already clocked in
+    if (isEmployeeClockedIn($employeeId)) {
+        echo '
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Warning",
+                    text: "You are already clocked in!",
+                    icon: "warning",
+                    confirmButtonText: "OK"
+                });
+            });
+            console.log("Already Clocked In");
+            </script>';
+    } else {
+        // Clock employee's time-in
+        clockInEmployee($employeeId);
+
         echo '
             <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -97,11 +131,9 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     confirmButtonText: "OK"
                 });
             });
-            console.log(\'Log In Successful\');
+            console.log("Log In Successful");
             </script>';
     }
-    // Close the statement
-    $stmt->close();
 }
 ?>
 
