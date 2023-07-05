@@ -76,13 +76,13 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
     // Clock user's time-in
     $currentTime = date("Y-m-d H:i:s");
-    $userId = $_SESSION["id"];
+    $employeeId = $_SESSION["id"];
     // Assuming you have an active database connection established
     // Prepare the SQL statement
     $sql = "UPDATE attendance SET clock_in = ? WHERE employee_id = ?";
     // Prepare and bind the parameters
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $currentTime, $userId);
+    $stmt->bind_param("si", $currentTime, $employeeId);
     // Execute the statement
     $stmt->execute();
     // Check if the clock-in was successful
