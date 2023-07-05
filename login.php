@@ -35,6 +35,72 @@ function clockInEmployee($employeeId)
     $stmt->close();
 }
 
+function logOutEmployee($employeeId)
+{
+    global $conn;
+
+    // Check if the employee is already clocked out
+    $sql = "SELECT clock_out FROM attendance WHERE employee_id = ? AND DATE(clock_out) = CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employeeId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Employee is already clocked out, display a message
+        echo '
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Warning",
+                    text: "You are already clocked out!",
+                    icon: "warning",
+                    confirmButtonText: "OK"
+                });
+            });
+            console.log("Already Clocked Out");
+            </script>';
+    } else {
+        // Prepare the SQL statement to update the clock-out time
+        $sql = "UPDATE attendance SET clock_out = NOW() WHERE employee_id = ? AND DATE(clock_in) = CURDATE()";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $employeeId);
+        $stmt->execute();
+
+        // Check if the clock-out was successful
+        if ($stmt->affected_rows > 0) {
+            echo '
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Clocked out successfully!",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                });
+                console.log("Log Out Successful");
+                </script>';
+        } else {
+            echo '
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to clock out!",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                });
+                console.log("Log Out Failed");
+                </script>';
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+}
+
 if (isset($_POST['submit'])) {
     if (isset($_POST['fullnameemail']) && isset($_POST['password'])) {
         $fullnameemail = $_POST['fullnameemail'];
@@ -97,8 +163,7 @@ if (isset($_POST['submit'])) {
             </scrip>';
     }
 }
-
-// Display logged-in successfully message
+// Display logged-In successfully message
 if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
     $loggedInUser = $_SESSION["name"];
     $employeeId = $_SESSION["id"];
@@ -135,6 +200,22 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
             </script>';
     }
 }
+// Display logged-Out successfully message
+if (isset($_POST['logout'])) {
+    if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
+        $employeeId = $_SESSION["id"];
+
+        logOutEmployee($employeeId); // Call the function to log out the employee
+
+        // Unset the session variables and destroy the session
+        session_unset();
+        session_destroy();
+
+        // Redirect the user to the login page
+        header("Location: login.php");
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -169,6 +250,9 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] === true) {
                     <button type="submit" class="btn btn-primary" name="submit">Login</button>
                 </form>
                 <br>
+                <form class="d-flex justify-content-center flex-column" action="" method="post">
+                    <button type="submit" class="btn btn-primary mb-3 w-75" name="logout">Logout</button>
+                </form>
                 <div class="register-login">
                     <a href="Register.php" class="btn btn-primary">Register</a>
                 </div>
