@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
                 </form>
                 <br>
                 <div class="register-login w-25">
-                    <a href="login.php" class="btn btn-primary">Login</a>
+                    <a href="login.php" class="btn btn-primary">ClockIn</a>
                 </div>
             </div>
         </div>

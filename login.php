@@ -255,11 +255,11 @@ if (isset($_POST['logout'])) {
                         <input type="password" class="form-control" name="password" id="password" required value="">
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-primary" name="submit">Login</button>
+                    <button type="submit" class="btn btn-primary" name="submit">Cloc</button>
                 </form>
                 <br>
                 <form class="d-flex justify-content-center flex-column" action="" method="post">
-                    <button type="submit" class="btn btn-primary mb-3 w-75" name="logout">Logout</button>
+                    <button type="submit" class="btn btn-primary mb-3 w-75" name="logout">ClockOutkIn</button>
                 </form>
                 <div class="register-login">
                     <a href="Register.php" class="btn btn-primary">Register</a>
